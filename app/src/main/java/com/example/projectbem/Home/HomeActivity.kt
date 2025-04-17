@@ -6,14 +6,20 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.example.projectbem.Drawer.SettingMenu.SettingActivity
+import com.example.projectbem.Drawer.SettingMenu.SettingPreferences
+import com.example.projectbem.Drawer.SettingMenu.SettingViewModel
+import com.example.projectbem.Drawer.SettingMenu.SettingViewModelFactory
+import com.example.projectbem.Drawer.SettingMenu.dataStore
 import com.example.projectbem.R
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -73,6 +79,11 @@ class HomeActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        val viewModel = ViewModelProvider(this, SettingViewModelFactory(SettingPreferences.getInstance(dataStore)))[SettingViewModel::class.java]
+        viewModel.getThemeSetting().observe(this){isDarkModeActive ->
+            AppCompatDelegate.setDefaultNightMode(if (isDarkModeActive) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 }
