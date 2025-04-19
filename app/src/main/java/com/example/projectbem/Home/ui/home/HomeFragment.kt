@@ -4,35 +4,42 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectbem.Adapter.EventAdapter
+import com.example.projectbem.DummyData.EventModel
+import com.example.projectbem.R
 import com.example.projectbem.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var eventAdapter: EventAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+
+        val eventList = listOf(
+            EventModel("Lomba Futsal", "Kompetisi futsal antar angkatan", R.drawable.nahida_post),
+            EventModel("Hari Santri", "Acara besar pondok dengan lomba dan pentas seni", R.drawable.raiden_mei_post),
+            EventModel("Pelatihan IT", "Belajar pemrograman dan desain", R.drawable.wise_post)
+        )
+
+
+        eventAdapter = EventAdapter(eventList)
+        binding.recyclerEvent.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = eventAdapter
         }
-        return root
+
+        return binding.root
     }
 
     override fun onDestroyView() {

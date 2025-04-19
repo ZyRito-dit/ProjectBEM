@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Drawer.SettingMenu.DarkMode.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,13 +16,28 @@
         android:theme="@style/Theme.ProjectBEM"
         tools:targetApi="31">
         <activity
+            android:name=".Drawer.Profile.EdtActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.Gallery.FullScreenImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.Divisi_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.Gallery.Gallery_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Drawer.Profile.ProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".Drawer.SettingMenu.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".Home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
