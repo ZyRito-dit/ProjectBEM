@@ -6,4 +6,23 @@
     </style>
 
     <style name="Theme.ProjectBEM" parent="Base.Theme.ProjectBEM" />
+
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">18dp</item>
+    </style>
+
+    <style name="RoundedImage" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/biruJanjutan</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+
+
+
 </resources>

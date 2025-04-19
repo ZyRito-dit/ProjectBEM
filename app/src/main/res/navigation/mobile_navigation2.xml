@@ -18,8 +18,22 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_votes"
+        android:name="com.example.projectbem.Home.ui.Vote.VoteFragment"
+        android:label="fragment_vote"
+        tools:layout="@layout/fragment_vote" />
+
+    <fragment
+        android:id="@+id/navigation_jadwal"
+        android:name="com.example.projectbem.Home.ui.Jadwal.JadwalFragment"
+        android:label="fragment_jadwal"
+        tools:layout="@layout/fragment_jadwal" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.projectbem.Home.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+
 </navigation>
