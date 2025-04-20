@@ -1,4 +1,4 @@
-package com.example.projectbem.DummyData.retrofit
+package com.example.projectbem.Data.retrofit
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

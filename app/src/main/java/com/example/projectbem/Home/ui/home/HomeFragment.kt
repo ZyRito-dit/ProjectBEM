@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.projectbem.Adapter.EventAdapter
-import com.example.projectbem.DummyData.EventModel
+import com.example.projectbem.Data.EventModel
 import com.example.projectbem.R
 import com.example.projectbem.databinding.FragmentHomeBinding
 

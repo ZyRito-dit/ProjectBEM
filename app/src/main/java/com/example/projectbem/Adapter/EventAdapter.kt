@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projectbem.DummyData.EventModel
+import com.example.projectbem.Data.EventModel
 import com.example.projectbem.R
 
 class EventAdapter(private val listEvent: List<EventModel>) :
