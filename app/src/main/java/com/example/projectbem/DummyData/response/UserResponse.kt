@@ -1,4 +1,4 @@
-package com.example.projectbem.DummyData
+package com.example.projectbem.DummyData.response
 
 import com.google.gson.annotations.SerializedName
 
