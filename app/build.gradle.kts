@@ -58,11 +58,6 @@ dependencies {
 
     implementation (libs.github.glide)
 
-    implementation(libs.androidx.datastore.preferences)
-
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.core)
-
     implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
