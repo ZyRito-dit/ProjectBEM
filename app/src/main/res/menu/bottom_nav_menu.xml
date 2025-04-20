@@ -12,6 +12,18 @@
         android:title="@string/title_dashboard" />
 
     <item
+        android:id="@+id/navigation_votes"
+        android:icon="@drawable/baseline_how_to_vote_24"
+        android:title="@string/title_vote" />
+
+
+    <item
+        android:id="@+id/navigation_jadwal"
+        android:icon="@drawable/baseline_calendar_month_24"
+        android:title="@string/title_jadwal" />
+
+
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_notifications" />

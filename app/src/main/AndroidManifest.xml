@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".Drawer.SettingMenu.DarkMode.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,7 +14,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectBEM"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <activity
+            android:name=".Home.dashboard_item.Absensi.Absensi_activity"
+            android:exported="false"
+            android:theme="@style/Theme.ProjectBEM" />
+        <activity
+            android:name=".Home.dashboard_item.Absensi.divisi_activity"
+            android:exported="false" />
+        <activity
+            android:name=".Drawer.Profile.EdtActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.Gallery.FullScreenImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.Divisi_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.Gallery.Gallery_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Drawer.Profile.ProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".Drawer.SettingMenu.SettingActivity"
             android:exported="false" />
@@ -21,8 +44,8 @@
             android:name=".Home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Login.MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
