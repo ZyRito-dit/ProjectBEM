@@ -11,7 +11,7 @@ interface BemDao {
     suspend fun insertUser(user: BemEntity)
 
     @Query("SELECT * FROM bem LIMIT 1")
-    suspend fun getLoggedInUser(): BemEntity
+    suspend fun getUser(): BemEntity
 
     @Query("DELETE FROM bem")
     suspend fun clearUser()

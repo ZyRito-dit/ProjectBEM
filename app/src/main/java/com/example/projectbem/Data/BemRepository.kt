@@ -2,7 +2,8 @@ package com.example.projectbem.Data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.example.projectbem.Data.response.UserItem
+import com.example.projectbem.Data.response.login.LoginResponse
+import com.example.projectbem.Data.response.login.TokenResponse
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
 import com.example.projectbem.Data.room.BemEntity
@@ -12,37 +13,34 @@ class BemRepository private constructor(
     private val bemDao: BemDao,
     private val apiService: ApiService
     ){
-    suspend fun login(username: String, password: String): LiveData<Result<UserItem>> = liveData(Dispatchers.IO) {
+    fun login(username: String, nim: String): LiveData<Result<TokenResponse>> = liveData(Dispatchers.IO) {
         emit(Result.Loading)
         try {
-            val response = apiService.getUsers()
-            val listUser = response.user
+            val request = LoginResponse(username = username, nim = nim)
+            val response = apiService.getLogin(request)
 
-            val userlist = listUser?.find { user ->
-                user?.username == username && user.nim == password
-            }
+            val user = BemEntity(
+                username = username,
+                password = nim,
+                role = response.role ?: "",
+                token = response.token ?: ""
+            )
 
-            if (userlist != null) {
-                val bemEntity = BemEntity(
-                    id = userlist.id ?: 0,
-                    username = userlist.username ?: "",
-                    image = userlist.image ?: "",
-                    statusOnline = userlist.statusOnline ?: false,
-                    nim = userlist.nim ?: "",
-                    role = userlist.role ?: "",
-                    createdAt = userlist.createdAt ?: "",
-                    updatedAt = userlist.updatedAt ?: "",
-                    divisi = userlist.divisi ?: ""
-                )
-                bemDao.clearUser()
-                bemDao.insertUser(bemEntity)
-                emit(Result.Success(userlist))
-            } else{
-                emit(Result.Error("User not found"))
-            }
+            bemDao.clearUser()
+            bemDao.insertUser(user)
+
+            emit(Result.Success(response))
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            emit(Result.Error(e.message ?: "Terjadi kesalahan"))
         }
+    }
+
+    suspend fun getLogin(): BemEntity {
+        return bemDao.getUser()
+    }
+
+    suspend fun logoutUser() {
+        bemDao.clearUser()
     }
 
     companion object {
