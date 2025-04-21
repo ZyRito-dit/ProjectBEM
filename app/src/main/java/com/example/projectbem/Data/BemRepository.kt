@@ -1,50 +1,56 @@
 package com.example.projectbem.Data
 
-
-
-import com.example.projectbem.Data.response.LoginResponse
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import com.example.projectbem.Data.response.login.LoginResponse
+import com.example.projectbem.Data.response.login.TokenResponse
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
-import java.lang.Exception
+import com.example.projectbem.Data.room.BemEntity
+import kotlinx.coroutines.Dispatchers
 
 class BemRepository private constructor(
     private val bemDao: BemDao,
     private val apiService: ApiService
-) {
-
-
-    suspend fun login(username: String, nim: String): LoginResponse {
+    ){
+    fun login(username: String, nim: String): LiveData<Result<TokenResponse>> = liveData(Dispatchers.IO) {
+        emit(Result.Loading)
         try {
+            val request = LoginResponse(username = username, nim = nim)
+            val response = apiService.getLogin(request)
 
-            val response = apiService.loginUser(LoginRequest(username, nim))
+            val user = BemEntity(
+                username = username,
+                password = nim,
+                role = response.role ?: "",
+                token = response.token ?: ""
+            )
 
+            bemDao.clearUser()
+            bemDao.insertUser(user)
 
-            if (response.isSuccessful) {
-                val body = response.body()
-                return body ?: throw Exception("Response kosong dari server")
-            } else {
-
-                val errorMessage = response.errorBody()?.string() ?: "Login gagal"
-                throw Exception(errorMessage)
-            }
+            emit(Result.Success(response))
         } catch (e: Exception) {
-
-            throw Exception("Terjadi kesalahan: ${e.message}")
+            emit(Result.Error(e.message ?: "Terjadi kesalahan"))
         }
+    }
+
+    suspend fun getLogin(): BemEntity {
+        return bemDao.getUser()
+    }
+
+    suspend fun logoutUser() {
+        bemDao.clearUser()
     }
 
     companion object {
         @Volatile
-        private var instance: BemRepository? = null
+        private var INSTANCE: BemRepository? = null
 
-        fun getInstance(
-            bemDao: BemDao,
-            apiService: ApiService
-        ): BemRepository =
-            instance ?: synchronized(this) {
-                instance ?: BemRepository(bemDao, apiService)
-            }.also { instance = it }
+        fun getInstance(bemDao: BemDao, apiService: ApiService): BemRepository {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: BemRepository(bemDao, apiService).also { INSTANCE = it }
+            }
+        }
     }
 }
-
-

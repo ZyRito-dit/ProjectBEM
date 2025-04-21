@@ -1,29 +1,31 @@
 package com.example.projectbem.Data
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.projectbem.Data.response.LoginResponse
-import com.example.projectbem.Data.response.UserItem
+import com.example.projectbem.Data.response.login.TokenResponse
+import com.example.projectbem.Data.room.BemEntity
 import kotlinx.coroutines.launch
 
-
 class UsersViewModel(private val repository: BemRepository) : ViewModel() {
+    fun login(username: String, nim: String): LiveData<Result<TokenResponse>> {
+        return repository.login(username, nim)
+    }
 
-    private val _users = MutableLiveData<Result<LoginResponse>>()
-    val users: LiveData<Result<LoginResponse>> = _users
-
-    fun login(username: String, nim: String) {
-        _users.value = Result.Loading
-
+    fun getUser(onResult: (BemEntity?) -> Unit) {
         viewModelScope.launch {
             try {
-                val response = repository.login(username, nim)
-                _users.value = Result.Success(response)
+                val user = repository.getLogin()
+                onResult(user)
             } catch (e: Exception) {
-                _users.value = Result.Error(e.message ?: "Unknown Error")
+                onResult(null)
             }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            repository.logoutUser()
         }
     }
 }

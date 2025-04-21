@@ -1,12 +1,11 @@
 package com.example.projectbem.Login
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.projectbem.Data.BemRepository
 import com.example.projectbem.Data.Result
 import com.example.projectbem.Data.UsersViewModel
@@ -19,65 +18,66 @@ import com.example.projectbem.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: UsersViewModel
+    private val viewModel: UsersViewModel by viewModels {
+        UsersViewModelFactory(
+            BemRepository.getInstance(
+                BemDatabase.getInstance(this).bemDao(),
+                ApiConfig.getApiService(token = "")
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dao = BemDatabase.getInstance(this).bemDao()
-        val apiService = ApiConfig.getApiService()
-        val repository = BemRepository.getInstance(dao, apiService)
-        val factory = UsersViewModelFactory(repository)
+        binding.btnLogin.setOnClickListener {
+            val username = binding.edtNIK.text.toString().trim()
+            val password = binding.edtPassword.text.toString().trim()
 
-        viewModel = ViewModelProvider(this, factory)[UsersViewModel::class.java]
-
-        viewModel.users.observe(this) { result ->
-            when (result) {
+            if (username.isEmpty()) {
+                binding.edtNIK.error = "Username wajib diisi"
+                return@setOnClickListener
+            }
+            if (password.isEmpty()) {
+                binding.edtPassword.error = "Password wajib diisi"
+                return@setOnClickListener
+            }
+            if (username.isEmpty() && password.isEmpty()) {
+                binding.edtNIK.error = "Username wajib diisi"
+                binding.edtPassword.error = "Password wajib diisi"
+                return@setOnClickListener
+            }
+            loginUser(username, password)
+        }
+    }
+    private fun loginUser(username: String, nim: String){
+        viewModel.login(username, nim).observe(this) { result ->
+            when(result){
                 is Result.Error -> {
-
-                    Toast.makeText(this, result.error ?: "Login gagal", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Usernamer atau password salah", Toast.LENGTH_SHORT).show()
                 }
                 Result.Loading -> {
 
                 }
                 is Result.Success -> {
-                    val userData = result.data
-                    val token = userData.token
-                    val role = userData.role
-
-
-                    val sharedPref = getSharedPreferences("MYAPP", Context.MODE_PRIVATE)
-                    with(sharedPref.edit()) {
-                        putString("TOKEN", token)
-                        putString("ROLE", role)
-                        apply()
-                    }
-
-                    Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, HomeActivity::class.java))
+                    Toast.makeText(this, "Selamat datang ${result.data.role}", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                     finish()
                 }
             }
         }
+    }
 
-        binding.btnLogin.setOnClickListener {
-            val username = binding.edtNIK.text.toString().trim()
-            val nim = binding.edtPassword.text.toString().trim()
-
-            var isValid = true
-            if (username.isEmpty()) {
-                binding.edtNIK.error = "This field is required"
-                isValid = false
-            }
-            if (nim.isEmpty()) {
-                binding.edtPassword.error = "This field is required"
-                isValid = false
-            }
-
-            if (isValid) {
-                viewModel.login(username, nim)
+    override fun onStart() {
+        super.onStart()
+        viewModel.getUser { user ->
+            if (user != null) {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
