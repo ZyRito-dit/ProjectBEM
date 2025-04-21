@@ -22,16 +22,13 @@
             android:exported="false"
             android:theme="@style/Theme.ProjectBEM" />
         <activity
-            android:name=".Home.dashboard_item.Absensi.divisi_activity"
+            android:name=".Home.dashboard_item.devisi.Divisi_Activity"
             android:exported="false" />
         <activity
             android:name=".Drawer.Profile.EdtActivity"
             android:exported="false" />
         <activity
             android:name=".Home.dashboard_item.Gallery.FullScreenImageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Home.dashboard_item.devisi.Divisi_Activity"
             android:exported="false" />
         <activity
             android:name=".Home.dashboard_item.Gallery.Gallery_Activity"

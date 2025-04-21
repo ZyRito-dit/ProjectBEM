@@ -1,6 +1,7 @@
 package com.example.projectbem.Login
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.example.projectbem.Data.retrofit.ApiConfig
 import com.example.projectbem.Data.room.BemDatabase
 import com.example.projectbem.Home.HomeActivity
 import com.example.projectbem.databinding.ActivityMainBinding
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -31,15 +33,28 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, factory)[UsersViewModel::class.java]
 
-        viewModel.users.observe(this){ result ->
-            when(result){
+        viewModel.users.observe(this) { result ->
+            when (result) {
                 is Result.Error -> {
-                    Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+
+                    Toast.makeText(this, result.error ?: "Login gagal", Toast.LENGTH_SHORT).show()
                 }
                 Result.Loading -> {
 
                 }
                 is Result.Success -> {
+                    val userData = result.data
+                    val token = userData.token
+                    val role = userData.role
+
+
+                    val sharedPref = getSharedPreferences("MYAPP", Context.MODE_PRIVATE)
+                    with(sharedPref.edit()) {
+                        putString("TOKEN", token)
+                        putString("ROLE", role)
+                        apply()
+                    }
+
                     Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, HomeActivity::class.java))
                     finish()
@@ -49,17 +64,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
             val username = binding.edtNIK.text.toString().trim()
-            val password = binding.edtPassword.text.toString().trim()
+            val nim = binding.edtPassword.text.toString().trim()
 
+            var isValid = true
             if (username.isEmpty()) {
                 binding.edtNIK.error = "This field is required"
-                return@setOnClickListener
+                isValid = false
             }
-            if (password.isEmpty()) {
+            if (nim.isEmpty()) {
                 binding.edtPassword.error = "This field is required"
-                return@setOnClickListener
+                isValid = false
             }
-            viewModel.login(username, password)
+
+            if (isValid) {
+                viewModel.login(username, nim)
+            }
         }
     }
 }

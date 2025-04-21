@@ -1,58 +1,49 @@
 package com.example.projectbem.Data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import com.example.projectbem.Data.response.UserItem
+import com.example.projectbem.Data.response.LoginResponse
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
-import com.example.projectbem.Data.room.BemEntity
-import kotlinx.coroutines.Dispatchers
+import org.json.JSONObject
 
 class BemRepository private constructor(
     private val bemDao: BemDao,
     private val apiService: ApiService
-    ){
-    suspend fun login(username: String, password: String): LiveData<Result<UserItem>> = liveData(Dispatchers.IO) {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getUsers()
-            val listUser = response.user
+) {
 
-            val userlist = listUser?.find { user ->
-                user?.username == username && user.nim == password
-            }
-
-            if (userlist != null) {
-                val bemEntity = BemEntity(
-                    id = userlist.id ?: 0,
-                    username = userlist.username ?: "",
-                    image = userlist.image ?: "",
-                    statusOnline = userlist.statusOnline ?: false,
-                    nim = userlist.nim ?: "",
-                    role = userlist.role ?: "",
-                    createdAt = userlist.createdAt ?: "",
-                    updatedAt = userlist.updatedAt ?: "",
-                    divisi = userlist.divisi ?: ""
-                )
-                bemDao.clearUser()
-                bemDao.insertUser(bemEntity)
-                emit(Result.Success(userlist))
-            } else{
-                emit(Result.Error("User not found"))
+    suspend fun login(username: String, nim: String): Result<LoginResponse> {
+        return try {
+            val response = apiService.loginUser(LoginRequest(username, nim))
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    Result.Success(body)
+                } else {
+                    Result.Error("Response kosong dari server")
+                }
+            } else {
+                val errorMessage = try {
+                    val errorJson = response.errorBody()?.string()
+                    JSONObject(errorJson ?: "").getString("message")
+                } catch (e: Exception) {
+                    "Terjadi kesalahan saat membaca pesan error"
+                }
+                Result.Error(errorMessage)
             }
         } catch (e: Exception) {
-            emit(Result.Error(e.message.toString()))
+            Result.Error("Terjadi kesalahan: ${e.message}")
         }
     }
 
     companion object {
         @Volatile
-        private var INSTANCE: BemRepository? = null
+        private var instance: BemRepository? = null
 
-        fun getInstance(bemDao: BemDao, apiService: ApiService): BemRepository {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: BemRepository(bemDao, apiService).also { INSTANCE = it }
-            }
-        }
+        fun getInstance(
+            bemDao: BemDao,
+            apiService: ApiService
+        ): BemRepository =
+            instance ?: synchronized(this) {
+                instance ?: BemRepository(bemDao, apiService)
+            }.also { instance = it }
     }
 }
