@@ -1,13 +1,25 @@
 package com.example.projectbem.Data.retrofit
 
-import com.example.projectbem.Data.response.login.LoginResponse
-import com.example.projectbem.Data.response.login.TokenResponse
+import com.example.projectbem.Data.response.event.EventsResponse
+import com.example.projectbem.Data.response.user.LoginRequest
+import com.example.projectbem.Data.response.user.TokenResponse
+import com.example.projectbem.Data.response.user.UserResponse
+import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
     @POST("login")
-    suspend fun getLogin(
-        @Body request: LoginResponse
-    ): TokenResponse
+    suspend fun login(
+        @Body request: LoginRequest
+    ): Response<TokenResponse>
+
+    @GET("user/profile")
+    suspend fun getProfile(@Header("Cookie") token: String): Response<UserResponse>
+
+    @GET("event")
+    suspend fun getAllEvents(): EventsResponse
+
 }

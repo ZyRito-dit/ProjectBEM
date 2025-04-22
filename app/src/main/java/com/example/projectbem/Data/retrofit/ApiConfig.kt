@@ -1,25 +1,30 @@
-package com.example.projectbem.Data.retrofit
-
+import com.example.projectbem.Data.retrofit.ApiService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiConfig {
-    companion object{
-        fun getApiService(token: String): ApiService {
+    companion object {
+        fun getApiService(token: String? = null): ApiService {
             val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            val authInterceptor = Interceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                chain.proceed(request)
+
+            val cookieInterceptor = Interceptor { chain ->
+                val requestBuilder = chain.request().newBuilder()
+                token?.let {
+                    requestBuilder.addHeader("Cookie", "token=$it")
+                }
+                chain.proceed(requestBuilder.build())
             }
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(authInterceptor)
+                .addInterceptor(cookieInterceptor)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
             val retrofit = Retrofit.Builder()

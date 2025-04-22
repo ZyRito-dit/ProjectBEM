@@ -6,20 +6,22 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [BemEntity::class], version = 1, exportSchema = false)
-abstract class BemDatabase: RoomDatabase() {
+abstract class BemDatabase : RoomDatabase() {
     abstract fun bemDao(): BemDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: BemDatabase? = null
 
         fun getInstance(context: Context): BemDatabase {
             return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     BemDatabase::class.java,
                     "bem_database"
-                ).build().also { INSTANCE = it }
+                ).fallbackToDestructiveMigration().build()
+                INSTANCE = instance
+                instance
             }
         }
     }

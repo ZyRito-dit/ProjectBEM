@@ -1,5 +1,6 @@
 package com.example.projectbem.Data.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,9 +11,10 @@ interface BemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: BemEntity)
 
-    @Query("SELECT * FROM bem LIMIT 1")
-    suspend fun getUser(): BemEntity
+    @Query("SELECT * FROM bem WHERE id = 1")
+    suspend fun getUser(): BemEntity?
 
     @Query("DELETE FROM bem")
-    suspend fun clearUser()
+    suspend fun deleteUser()
+
 }

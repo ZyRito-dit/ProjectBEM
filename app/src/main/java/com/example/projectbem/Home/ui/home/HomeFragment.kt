@@ -24,22 +24,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-
-        val eventList = listOf(
-            EventModel("Lomba Futsal", "Kompetisi futsal antar angkatan", R.drawable.nahida_post),
-            EventModel("Hari Santri", "Acara besar pondok dengan lomba dan pentas seni", R.drawable.raiden_mei_post),
-            EventModel("Pelatihan IT", "Belajar pemrograman dan desain", R.drawable.wise_post)
-        )
-
-
-        eventAdapter = EventAdapter(eventList)
-        binding.recyclerEvent.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = eventAdapter
-        }
-
         return binding.root
+
+
     }
 
     override fun onDestroyView() {

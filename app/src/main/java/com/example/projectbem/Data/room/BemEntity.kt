@@ -4,11 +4,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "bem")
-data class BemEntity (
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val username: String,
-    val password: String,
+data class BemEntity(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int = 1,
+    val token: String,
     val role: String,
-    val token: String
+    val username: String?,
+    val nim: String?,
+    val image: String?,
+    val divisi: String?
 )

@@ -1,4 +1,4 @@
-package com.example.projectbem.Data.response.login
+package com.example.projectbem.Data.response.user
 
 import com.google.gson.annotations.SerializedName
 
@@ -8,5 +8,5 @@ data class TokenResponse(
 	val role: String? = null,
 
 	@field:SerializedName("token")
-	val token: String? = null
+	val token: String
 )

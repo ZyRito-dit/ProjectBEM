@@ -1,19 +1,21 @@
 package com.example.projectbem.Login
 
 
+import ApiConfig
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.projectbem.Data.BemRepository
 import com.example.projectbem.Data.Result
 import com.example.projectbem.Data.UsersViewModel
 import com.example.projectbem.Data.UsersViewModelFactory
-import com.example.projectbem.Data.retrofit.ApiConfig
 import com.example.projectbem.Data.room.BemDatabase
 import com.example.projectbem.Home.HomeActivity
 import com.example.projectbem.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         UsersViewModelFactory(
             BemRepository.getInstance(
                 BemDatabase.getInstance(this).bemDao(),
-                ApiConfig.getApiService(token = "")
+                ApiConfig.getApiService(token = null)
             )
         )
     }
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         binding.btnLogin.setOnClickListener {
             val username = binding.edtNIK.text.toString().trim()
@@ -49,23 +52,23 @@ class MainActivity : AppCompatActivity() {
                 binding.edtPassword.error = "Password wajib diisi"
                 return@setOnClickListener
             }
-            loginUser(username, password)
+            viewModel.loginUser(username, password)
         }
-    }
-    private fun loginUser(username: String, nim: String){
-        viewModel.login(username, nim).observe(this) { result ->
-            when(result){
-                is Result.Error -> {
-                    Toast.makeText(this, "Usernamer atau password salah", Toast.LENGTH_SHORT).show()
-                }
-                Result.Loading -> {
+        lifecycleScope.launch {
+            viewModel.loginState.collect { result ->
+                when(result) {
+                    is Result.Error -> {
+                        Toast.makeText(this@MainActivity, "Username atau password salah", Toast.LENGTH_SHORT).show()
+                    }
+                    Result.Loading -> {
 
-                }
-                is Result.Success -> {
-                    Toast.makeText(this, "Selamat datang ${result.data.role}", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    }
+                    is Result.Success -> {
+                        Toast.makeText(this@MainActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
             }
         }
@@ -73,11 +76,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getUser { user ->
-            if (user != null) {
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
+        viewModel.loadUserData()
+        lifecycleScope.launch {
+            viewModel.userData.collect { user ->
+                if (user != null) {
+                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
     }

@@ -23,13 +23,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
         android:paddingTop="8dp"
         android:fontFamily="@font/acme"
         android:text="Nama Pengguna"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="20dp"
+        android:fontFamily="@font/acme"
+        android:text="Role"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

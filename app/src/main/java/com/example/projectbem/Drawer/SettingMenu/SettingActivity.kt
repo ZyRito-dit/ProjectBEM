@@ -1,5 +1,6 @@
 package com.example.projectbem.Drawer.SettingMenu
 
+import ApiConfig
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -9,7 +10,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.example.projectbem.Data.BemRepository
 import com.example.projectbem.Data.UsersViewModel
 import com.example.projectbem.Data.UsersViewModelFactory
-import com.example.projectbem.Data.retrofit.ApiConfig
 import com.example.projectbem.Data.room.BemDatabase
 import com.example.projectbem.Login.MainActivity
 import com.example.projectbem.databinding.ActivitySettingBinding
@@ -21,7 +21,7 @@ class SettingActivity : AppCompatActivity() {
         UsersViewModelFactory(
             BemRepository.getInstance(
                 BemDatabase.getInstance(this).bemDao(),
-                ApiConfig.getApiService(token = "")
+                ApiConfig.getApiService()
             )
         )
     }
@@ -59,7 +59,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.buttonLogout.setOnClickListener {
-            viewModel.logout()
+            viewModel.logoutUser()
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
