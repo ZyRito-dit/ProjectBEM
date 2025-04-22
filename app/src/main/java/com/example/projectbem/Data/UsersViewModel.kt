@@ -70,6 +70,10 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
         }
     }
 
+    suspend fun getUserNow(): BemEntity? {
+        return repository.getUserData()
+    }
+
     fun loadUserData() {
         viewModelScope.launch {
             _userData.value = repository.getUserData()
