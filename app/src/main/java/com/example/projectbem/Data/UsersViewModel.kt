@@ -17,7 +17,6 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
     val loginState: StateFlow<Result<BemEntity>> = _loginState
 
     private val _userData = MutableStateFlow<BemEntity?>(null)
-    val userData: StateFlow<BemEntity?> = _userData
 
     fun loginUser(username: String, nim: String) {
         viewModelScope.launch {
@@ -72,12 +71,6 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
 
     suspend fun getUserNow(): BemEntity? {
         return repository.getUserData()
-    }
-
-    fun loadUserData() {
-        viewModelScope.launch {
-            _userData.value = repository.getUserData()
-        }
     }
 
     fun logoutUser() {
