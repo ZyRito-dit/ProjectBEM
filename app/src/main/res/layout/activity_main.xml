@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@android:color/white"
-            android:hint="NIK"
-            android:inputType="number"
+            android:hint="Username"
+            android:inputType="text"
             android:padding="10dp"
             android:textColor="@android:color/black" />
 
@@ -70,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@android:color/white"
-            android:hint="Password"
-            android:inputType="textPassword"
+            android:hint="NIM"
+            android:inputType="number"
             android:padding="10dp"
             android:textColor="@android:color/black" />
 

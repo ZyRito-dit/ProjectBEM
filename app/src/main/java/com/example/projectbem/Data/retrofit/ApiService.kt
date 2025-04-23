@@ -1,0 +1,63 @@
+package com.example.projectbem.Data.retrofit
+
+import com.example.projectbem.Data.response.divisi.AlatResponse
+import com.example.projectbem.Data.response.divisi.AlatResponseItem
+import com.example.projectbem.Data.response.divisi.MakananResponse
+import com.example.projectbem.Data.response.divisi.MakananResponseItem
+import com.example.projectbem.Data.response.divisi.MenuResponse
+import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.ObatResponseItem
+import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
+import com.example.projectbem.Data.response.divisi.PiketMakanResponse
+import com.example.projectbem.Data.response.divisi.SakitResponse
+import com.example.projectbem.Data.response.event.EventsResponse
+import com.example.projectbem.Data.response.user.LoginRequest
+import com.example.projectbem.Data.response.user.TokenResponse
+import com.example.projectbem.Data.response.user.UserResponse
+import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Query
+
+interface ApiService {
+    @POST("login")
+    suspend fun login(
+        @Body request: LoginRequest
+    ): Response<TokenResponse>
+
+    @GET("user/profile")
+    suspend fun getProfile(@Header("Cookie") token: String): Response<UserResponse>
+
+    @GET("event")
+    suspend fun getAllEvents(): EventsResponse
+
+    @GET("sekretaris/notulen")
+    suspend fun getNotulenByBulan(
+        @Query("bulan") bulan: String
+    ): List<Notulen>
+
+    @GET("pendidikan/barang")
+    suspend fun getAllBarang(
+        @Header("Cookie") token: String
+    ): Response<List<PendidikanResponseItem>>
+
+    @GET("dapur/piket")
+    suspend fun getAllPiket(): Response<PiketMakanResponse>
+
+    @GET("dapur/menu")
+    suspend fun getAllMenu(): Response<MenuResponse>
+
+    @GET("kesehatan/makanan")
+    suspend fun getAllMakanan(): Response<List<MakananResponseItem>>
+
+    @GET("kesehatan/obat")
+    suspend fun getAllObat(): Response<List<ObatResponseItem>>
+
+    @GET("kesehatan/sakit")
+    suspend fun getAllPasien(): Response<List<SakitResponse>>
+
+    @GET("kebersihan/data_alat")
+    suspend fun getAllAlat(): Response<List<AlatResponseItem>>
+}

@@ -1,4 +1,4 @@
-package com.example.projectbem.DummyData
+package com.example.projectbem.Data
 
 data class Jadwal(
     val namaKegiatan: String,

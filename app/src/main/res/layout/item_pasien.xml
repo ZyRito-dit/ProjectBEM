@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="4dp"
+    android:backgroundTint="#E4FAFF">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_tanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="Tanggal"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_pasien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Pasien"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_tanggal"
+            app:layout_constraintTop_toBottomOf="@+id/tv_tanggal"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_kelas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kelas"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_pasien"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pasien"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_penyakit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Jenis"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_kelas"
+            app:layout_constraintTop_toBottomOf="@+id/tv_kelas"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_penanganan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Penanganan"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_penyakit"
+            app:layout_constraintTop_toBottomOf="@+id/tv_penyakit"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_petugas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Petugas"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_penanganan"
+            app:layout_constraintTop_toBottomOf="@+id/tv_penanganan"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Status"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_petugas"
+            app:layout_constraintTop_toBottomOf="@+id/tv_petugas"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

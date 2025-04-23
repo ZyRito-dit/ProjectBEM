@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.projectbem.DummyData.Jadwal
+import com.example.projectbem.Data.Jadwal
 import com.example.projectbem.R
 import java.text.SimpleDateFormat
 import java.util.Date

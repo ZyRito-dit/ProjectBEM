@@ -63,4 +63,14 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="judul">Judul</string>
+    <string name="summary">Ringkasan</string>
+    <string name="owner">Owner</string>
+    <string name="category">Kategori</string>
+    <string name="kota">Lokasi</string>
+    <string name="tanggal">Tanggal</string>
+    <string name="waktu">Jam</string>
+    <string name="kouta">Kouta</string>
+    <string name="deskripsi">Deskripsi</string>
+
 </resources>

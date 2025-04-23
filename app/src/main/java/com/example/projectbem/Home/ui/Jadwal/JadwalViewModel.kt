@@ -1,10 +1,9 @@
 package com.example.projectbem.Home.ui.Jadwal
 
-import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.projectbem.DummyData.Jadwal
+import com.example.projectbem.Data.Jadwal
 
 class JadwalViewModel : ViewModel() {
 
