@@ -14,3 +14,14 @@ data class BemEntity(
     val image: String?,
     val divisi: String?
 )
+
+@Entity(tableName = "barang")
+data class BarangEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val namaBarang: String,
+    val stok: Int,
+    val image: String,
+    val keterangan: String,
+    val kondisi: String
+)

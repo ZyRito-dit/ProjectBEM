@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [BemEntity::class], version = 1, exportSchema = false)
+@Database(entities = [BemEntity::class, BarangEntity::class], version = 2, exportSchema = false)
 abstract class BemDatabase : RoomDatabase() {
     abstract fun bemDao(): BemDao
 

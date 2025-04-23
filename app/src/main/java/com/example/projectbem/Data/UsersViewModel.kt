@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
 import com.example.projectbem.Data.response.event.DataItem
 import com.example.projectbem.Data.response.user.LoginRequest
-import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.room.BemEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -118,6 +119,18 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private val _pendidikanBarang = MutableLiveData<List<PendidikanResponseItem>>()
+    val pendidikanBarang: LiveData<List<PendidikanResponseItem>> = _pendidikanBarang
+
+    fun getPendidikanBarang(token: String) {
+        viewModelScope.launch {
+            val response = repository.getPendidikanBarang(token)
+            response?.let {
+                _pendidikanBarang.value = it
             }
         }
     }

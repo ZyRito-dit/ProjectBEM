@@ -3,6 +3,7 @@ package com.example.projectbem.Data.retrofit
 import com.example.projectbem.Data.response.event.EventsResponse
 import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.PendidikanResponse
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
 import com.example.projectbem.Data.response.user.TokenResponse
 import com.example.projectbem.Data.response.user.UserResponse
@@ -31,5 +32,7 @@ interface ApiService {
     ): List<Notulen>
 
     @GET("pendidikan/barang")
-    suspend fun getAllBarang(@Header("Cookie") token: String): Response<PendidikanResponseItem>
+    suspend fun getAllBarang(
+        @Header("Cookie") token: String
+    ): Response<List<PendidikanResponseItem>>
 }
