@@ -16,5 +16,4 @@ interface BemDao {
 
     @Query("DELETE FROM bem")
     suspend fun deleteUser()
-
 }

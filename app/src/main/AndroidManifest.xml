@@ -3,12 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name=".Drawer.SettingMenu.DarkMode.MyApplication"
@@ -21,6 +26,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectBEM"
         tools:targetApi="31">
+        <activity
+            android:name=".Home.dashboard_item.devisi.SekretarisActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.BendaharaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.PendidikanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.KebersihanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.KesehatanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.dashboard_item.devisi.DapurActivity"
+            android:exported="false" />
         <activity
             android:name=".Home.ui.EventsDetailActivity"
             android:exported="false" />

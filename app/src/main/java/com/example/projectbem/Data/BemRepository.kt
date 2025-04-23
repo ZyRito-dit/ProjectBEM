@@ -1,6 +1,7 @@
 package com.example.projectbem.Data
 
 import com.example.projectbem.Data.response.user.LoginRequest
+import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
 import com.example.projectbem.Data.room.BemEntity
@@ -20,6 +21,10 @@ class BemRepository private constructor(
     suspend fun logout() = bemDao.deleteUser()
 
     suspend fun getAllEvents() = apiService.getAllEvents()
+
+    suspend fun getNotulenByBulan(bulan: String): List<Notulen> {
+        return apiService.getNotulenByBulan(bulan)
+    }
 
     companion object {
         @Volatile

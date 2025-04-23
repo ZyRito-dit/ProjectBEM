@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectbem.Data.response.event.DataItem
 import com.example.projectbem.Data.response.user.LoginRequest
+import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.room.BemEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -139,6 +140,21 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
                 e.printStackTrace()
             } finally {
                 _isLoading.value = false
+            }
+        }
+    }
+    private val _notulenList = MutableLiveData<List<Notulen>>()
+    val notulenList: LiveData<List<Notulen>> get() = _notulenList
+
+    private val _error = MutableLiveData<String>()
+
+    fun fetchNotulenByBulan(bulan: String) {
+        viewModelScope.launch {
+            try {
+                val result = repository.getNotulenByBulan(bulan)
+                _notulenList.value = result
+            } catch (e: Exception) {
+                _error.value = e.message
             }
         }
     }
