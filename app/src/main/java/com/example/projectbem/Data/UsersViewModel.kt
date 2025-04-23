@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectbem.Data.response.divisi.DataMenu
 import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
 import com.example.projectbem.Data.response.event.DataItem
@@ -168,6 +169,30 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
                 _notulenList.value = result
             } catch (e: Exception) {
                 _error.value = e.message
+            }
+        }
+    }
+
+    private val _piketList = MutableLiveData<List<com.example.projectbem.Data.response.divisi.DataItem>>()
+    val piketList: LiveData<List<com.example.projectbem.Data.response.divisi.DataItem>> get() = _piketList
+
+    fun fetchPiketMakan() {
+        viewModelScope.launch {
+            val result = repository.getAllPiketMakan()
+            result?.let {
+                _piketList.value = it.filterNotNull()
+            }
+        }
+    }
+
+    private val _menuList = MutableLiveData<List<DataMenu>>()
+    val menuList: LiveData<List<DataMenu>> get() = _menuList
+
+    fun fetchMenu() {
+        viewModelScope.launch {
+            val result = repository.getAllMenuMakan()
+            result?.let {
+                _menuList.value = it.filterNotNull()
             }
         }
     }

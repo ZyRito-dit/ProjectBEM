@@ -1,5 +1,7 @@
 package com.example.projectbem.Data
 
+import com.example.projectbem.Data.response.divisi.DataItem
+import com.example.projectbem.Data.response.divisi.DataMenu
 import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.response.divisi.PendidikanResponse
@@ -39,6 +41,23 @@ class BemRepository private constructor(
 
     suspend fun getNotulenByBulan(bulan: String): List<Notulen> {
         return apiService.getNotulenByBulan(bulan)
+    }
+
+    suspend fun getAllPiketMakan(): List<DataItem?>? {
+        val response = apiService.getAllPiket()
+        return if (response.isSuccessful) {
+            response.body()?.data
+        } else {
+            null
+        }
+    }
+    suspend fun getAllMenuMakan(): List<DataMenu?>? {
+        val response = apiService.getAllMenu()
+        return if (response.isSuccessful) {
+            response.body()?.data
+        } else {
+            null
+        }
     }
 
     companion object {
