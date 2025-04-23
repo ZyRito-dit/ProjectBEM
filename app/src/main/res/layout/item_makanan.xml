@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_marginHorizontal="4dp"
-    android:layout_marginVertical="8dp"
+    android:layout_marginHorizontal="6dp"
+    android:layout_marginVertical="4dp"
     android:backgroundTint="#E4FAFF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp">

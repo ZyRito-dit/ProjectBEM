@@ -1,10 +1,13 @@
 package com.example.projectbem.Data
 
+import com.example.projectbem.Data.response.divisi.AlatResponseItem
 import com.example.projectbem.Data.response.divisi.DataItem
 import com.example.projectbem.Data.response.divisi.DataMenu
 import com.example.projectbem.Data.response.divisi.MakananResponseItem
 import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.ObatResponseItem
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
+import com.example.projectbem.Data.response.divisi.SakitResponse
 import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
@@ -61,6 +64,15 @@ class BemRepository private constructor(
         }
     }
 
+    suspend fun getAllObat(): List<ObatResponseItem?>?{
+        val response = apiService.getAllObat()
+        return  if (response.isSuccessful){
+            response.body()
+        }else{
+            null
+        }
+    }
+
     suspend fun getAllMenuMakan(): List<DataMenu?>? {
         val response = apiService.getAllMenu()
         return if (response.isSuccessful) {
@@ -68,6 +80,24 @@ class BemRepository private constructor(
         } else {
             null
         }
+    }
+
+    suspend fun getAllPasien(): List<SakitResponse>? {
+        val response = apiService.getAllPasien()
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+        }
+    }
+
+    suspend fun getAllAlat(): List<AlatResponseItem?>? {
+        val response = apiService.getAllAlat()
+        return if (response.isSuccessful) {
+            response.body()
+        } else {
+            null
+            }
     }
 
     companion object {

@@ -1,11 +1,15 @@
 package com.example.projectbem.Data.retrofit
 
+import com.example.projectbem.Data.response.divisi.AlatResponse
+import com.example.projectbem.Data.response.divisi.AlatResponseItem
 import com.example.projectbem.Data.response.divisi.MakananResponse
 import com.example.projectbem.Data.response.divisi.MakananResponseItem
 import com.example.projectbem.Data.response.divisi.MenuResponse
 import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.ObatResponseItem
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
 import com.example.projectbem.Data.response.divisi.PiketMakanResponse
+import com.example.projectbem.Data.response.divisi.SakitResponse
 import com.example.projectbem.Data.response.event.EventsResponse
 import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.response.user.TokenResponse
@@ -47,4 +51,13 @@ interface ApiService {
 
     @GET("kesehatan/makanan")
     suspend fun getAllMakanan(): Response<List<MakananResponseItem>>
+
+    @GET("kesehatan/obat")
+    suspend fun getAllObat(): Response<List<ObatResponseItem>>
+
+    @GET("kesehatan/sakit")
+    suspend fun getAllPasien(): Response<List<SakitResponse>>
+
+    @GET("kebersihan/data_alat")
+    suspend fun getAllAlat(): Response<List<AlatResponseItem>>
 }

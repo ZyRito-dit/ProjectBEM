@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.projectbem.Data.response.divisi.AlatResponseItem
 import com.example.projectbem.Data.response.divisi.DataMenu
 import com.example.projectbem.Data.response.divisi.MakananResponseItem
 import com.example.projectbem.Data.response.divisi.Notulen
+import com.example.projectbem.Data.response.divisi.ObatResponseItem
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
+import com.example.projectbem.Data.response.divisi.SakitResponse
 import com.example.projectbem.Data.response.event.DataItem
 import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.room.BemEntity
@@ -205,6 +208,34 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
         viewModelScope.launch {
             val result = repository.getAllMakan()
             result?.let { _makananList.value = it.filterNotNull() }
+        }
+    }
+
+    private val _obatList = MutableLiveData<List<ObatResponseItem>>()
+    val obatList: LiveData<List<ObatResponseItem>> = _obatList
+
+    fun  fetchObat(){
+        viewModelScope.launch {
+            val result = repository.getAllObat()
+            result?.let { _obatList.value = it.filterNotNull() }
+        }
+    }
+    private val _pasienList = MutableLiveData<List<SakitResponse>>()
+    val pasienList: LiveData<List<SakitResponse>> = _pasienList
+
+    fun fetchPasien(){
+        viewModelScope.launch {
+            val result = repository.getAllPasien()
+            result?.let { _pasienList.value = it }
+        }
+    }
+    private val _alatList = MutableLiveData<List<AlatResponseItem>>()
+    val alatList: LiveData<List<AlatResponseItem>> = _alatList
+
+    fun fetchAlat(){
+        viewModelScope.launch {
+            val result = repository.getAllAlat()
+            result?.let { _alatList.value = it.filterNotNull() }
         }
     }
 }
