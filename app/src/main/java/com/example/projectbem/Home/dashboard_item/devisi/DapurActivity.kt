@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.projectbem.Adapter.DataMakananAdapter
 import com.example.projectbem.Adapter.MenuAdapter
 import com.example.projectbem.Adapter.PendidikanAdapter
 import com.example.projectbem.Adapter.PiketMakanAdapter
@@ -31,7 +32,7 @@ class DapurActivity : AppCompatActivity() {
     }
 
     private lateinit var adapter: PiketMakanAdapter
-
+    private lateinit var dataAdapter: DataMakananAdapter
     private lateinit var menuAdapter: MenuAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +63,16 @@ class DapurActivity : AppCompatActivity() {
         viewModel.fetchMenu()
         viewModel.menuList.observe(this) { list ->
             menuAdapter.submitList(list)
+        }
+
+        dataAdapter = DataMakananAdapter()
+        binding.rvData.adapter = dataAdapter
+        binding.rvData.layoutManager = LinearLayoutManager(this)
+
+        viewModel.fetchMakanan()
+
+        viewModel.makananList.observe(this){ list ->
+            dataAdapter.updateList(list)
         }
     }
 }

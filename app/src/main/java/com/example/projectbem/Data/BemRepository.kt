@@ -2,10 +2,10 @@ package com.example.projectbem.Data
 
 import com.example.projectbem.Data.response.divisi.DataItem
 import com.example.projectbem.Data.response.divisi.DataMenu
-import com.example.projectbem.Data.response.user.LoginRequest
+import com.example.projectbem.Data.response.divisi.MakananResponseItem
 import com.example.projectbem.Data.response.divisi.Notulen
-import com.example.projectbem.Data.response.divisi.PendidikanResponse
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
+import com.example.projectbem.Data.response.user.LoginRequest
 import com.example.projectbem.Data.retrofit.ApiService
 import com.example.projectbem.Data.room.BemDao
 import com.example.projectbem.Data.room.BemEntity
@@ -51,6 +51,16 @@ class BemRepository private constructor(
             null
         }
     }
+
+    suspend fun getAllMakan(): List<MakananResponseItem?>?{
+        val response = apiService.getAllMakanan()
+        return if (response.isSuccessful){
+            response.body()
+        } else {
+            null
+        }
+    }
+
     suspend fun getAllMenuMakan(): List<DataMenu?>? {
         val response = apiService.getAllMenu()
         return if (response.isSuccessful) {

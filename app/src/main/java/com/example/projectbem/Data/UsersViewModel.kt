@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.projectbem.Data.response.divisi.DataMenu
+import com.example.projectbem.Data.response.divisi.MakananResponseItem
 import com.example.projectbem.Data.response.divisi.Notulen
 import com.example.projectbem.Data.response.divisi.PendidikanResponseItem
 import com.example.projectbem.Data.response.event.DataItem
@@ -194,6 +195,16 @@ class UsersViewModel(private val repository: BemRepository) : ViewModel() {
             result?.let {
                 _menuList.value = it.filterNotNull()
             }
+        }
+    }
+
+    private val _makananList = MutableLiveData<List<MakananResponseItem>>()
+    val makananList: LiveData<List<MakananResponseItem>> = _makananList
+
+    fun fetchMakanan() {
+        viewModelScope.launch {
+            val result = repository.getAllMakan()
+            result?.let { _makananList.value = it.filterNotNull() }
         }
     }
 }
