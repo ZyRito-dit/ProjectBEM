@@ -73,42 +73,6 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Bio"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/gray">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Tanggal Lahir"
-            app:boxBackgroundMode="outline"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeWidth="2dp"
-            app:hintTextColor="@color/gray">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etBirthDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <!-- Save Button -->
         <Button
             android:id="@+id/btnSave"

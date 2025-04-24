@@ -1,6 +1,6 @@
-package com.example.projectbem.Data
+package com.example.projectbem.Api
 
-data class Jadwal(
+data class jadwal(
     val namaKegiatan: String,
     val deskripsi: String,
     val namaDivisi: String,

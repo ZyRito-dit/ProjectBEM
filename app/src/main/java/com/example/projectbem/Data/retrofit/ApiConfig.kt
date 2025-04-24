@@ -1,36 +1,34 @@
 package com.example.projectbem.Data.retrofit
 
-import okhttp3.Interceptor
+import android.content.Context
+import com.example.projectbem.Data.Cookie.AddCookiesInterceptor
+import com.example.projectbem.Data.Cookie.ReceivedCookiesInterceptor
+import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-
-class ApiConfig {
-    companion object{
-        fun getApiService(): ApiService{
-            val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-            val authInterceptor = Interceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                chain.proceed(request)
-            }
-
-            val client =OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build()
+import java.net.CookieManager
+import java.net.CookiePolicy
 
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://profur.rikpetik.site/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build()
+object ApiConfig {
+    fun getApiService(context: Context): ApiService {
+        val cookieManager = CookieManager()
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
 
+        val client = OkHttpClient.Builder()
+            .cookieJar(JavaNetCookieJar(cookieManager))
+            .addInterceptor(AddCookiesInterceptor(context))
+            .addInterceptor(ReceivedCookiesInterceptor(context))
+            .build()
 
-            return retrofit.create(ApiService::class.java)
-        }
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://profur.rikpetik.site/api/v1/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        return retrofit.create(ApiService::class.java)
     }
 }
+

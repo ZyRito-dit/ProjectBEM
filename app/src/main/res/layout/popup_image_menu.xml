@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popupLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_popup_menu"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/menuDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rincian"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:fontFamily="sans-serif-medium" />
+</LinearLayout>

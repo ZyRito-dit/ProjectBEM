@@ -20,6 +20,27 @@
         <item name="android:statusBarColor">@color/biruJanjutan</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
+    <style name="DetailLabel">
+        <item name="android:textColor">#B0B0B0</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="DetailValue">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+    <style name="RincianLabel">
+        <item name="android:textColor">#BBBBBB</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="RincianValue">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
 
 
 
