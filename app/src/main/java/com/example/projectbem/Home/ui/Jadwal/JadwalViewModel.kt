@@ -1,48 +1,47 @@
 package com.example.projectbem.Home.ui.Jadwal
 
-import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.projectbem.DummyData.Jadwal
+import com.example.projectbem.Api.jadwal
 
 class JadwalViewModel : ViewModel() {
 
 
-    private val _listJadwal = MutableLiveData<List<Jadwal>>()
-    val listJadwal: LiveData<List<Jadwal>> = _listJadwal
+    private val _listJadwal = MutableLiveData<List<jadwal>>()
+    val listJadwal: LiveData<List<jadwal>> = _listJadwal
 
         init {
             _listJadwal.value = listOf(
-                Jadwal(
+                jadwal(
                     namaKegiatan = "shalat Subuh",
                     deskripsi = "Waktu Subuh, ayo shalat berjamaah!",
                     namaDivisi = "Ibadah",
                     jamMulai = "04:30",
                     jamSelesai = "05:00",
                 ),
-                Jadwal(
+                jadwal(
                     namaKegiatan = "Shalat Dzuhur",
                     deskripsi = "Dzuhur Bro, Berhenti Dulu Ngodingnya",
                     namaDivisi = "Ibadah",
                     jamMulai = "11:58",
                     jamSelesai = "12:30",
                 ),
-                Jadwal(
+                jadwal(
                     namaKegiatan = "Shalat Asar",
                     deskripsi = "Asar Bro,Habis Ini Lanjut Kuliah Pesantren ya!",
                     namaDivisi = "Ibadah",
                     jamMulai = "15:15",
                     jamSelesai = "15:45",
                 ),
-                Jadwal(
+                jadwal(
                     namaKegiatan = "Shalat Maghrib",
                     deskripsi = "Maghrib",
                     namaDivisi = "Ibadah",
                     jamMulai = "17:58",
                     jamSelesai = "19:00",
                 ),
-                Jadwal(
+                jadwal(
                     namaKegiatan = "Shalat Subuh",
                     deskripsi = "Waktu Subuh, ayo shalat berjamaah!",
                     namaDivisi = "Ibadah",
@@ -52,7 +51,7 @@ class JadwalViewModel : ViewModel() {
             )
         }
 
-    fun updateJadwal(newList: List<Jadwal>) {
+    fun updateJadwal(newList: List<jadwal>) {
         _listJadwal.value = newList
     }
 }

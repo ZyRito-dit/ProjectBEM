@@ -163,7 +163,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/profileName"
+                                android:id="@+id/tvName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Kirim Noah"
@@ -177,18 +177,12 @@
 
 
                     <TextView
-                        android:id="@+id/profilelocation"
+                        android:id="@+id/TvNim"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Sumatra Selatan Palembang"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/profileBirthday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="20 Oktober 2006"
-                        android:textSize="14sp" />
 
 
                 </LinearLayout>

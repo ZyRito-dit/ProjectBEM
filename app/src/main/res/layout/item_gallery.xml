@@ -13,3 +13,5 @@
         android:scaleType="centerCrop"
         android:contentDescription="@string/image" />
 </FrameLayout>
+
+

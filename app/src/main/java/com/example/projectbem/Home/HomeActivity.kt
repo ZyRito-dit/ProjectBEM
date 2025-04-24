@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -14,9 +13,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.example.projectbem.Data.repository.ProfileRepository
+import com.example.projectbem.Data.retrofit.ApiConfig
 import com.example.projectbem.Drawer.Profile.ProfileActivity
+import com.example.projectbem.Drawer.Profile.ProfileViewModel
 import com.example.projectbem.Drawer.SettingMenu.SettingActivity
 import com.example.projectbem.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -40,7 +43,7 @@ class HomeActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val bottomNavView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment_home)
 
         val appBarConfiguration = AppBarConfiguration(
@@ -54,20 +57,12 @@ class HomeActivity : AppCompatActivity() {
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        bottomNavView.setupWithNavController(navController)
 
-        val navigationView: NavigationView = findViewById(R.id.drawer_nav_view)
-        val headerView = navigationView.getHeaderView(0)
-        val imageProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
-        val tvName = headerView.findViewById<TextView>(R.id.textViewName)
 
-        tvName.text = "Kirigaya Zyrito"
+        val drawerNavView: NavigationView = findViewById(R.id.drawer_nav_view)
 
-        Glide.with(this)
-            .load("https://i.pinimg.com/736x/7c/65/0a/7c650a069bffad9c44fa6d2893132e59.jpg")
-            .into(imageProfile)
-
-        navigationView.setNavigationItemSelectedListener{ menuItem ->
+        drawerNavView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_profile -> {
                     startActivity(Intent(this, ProfileActivity::class.java))
@@ -83,5 +78,24 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        val headerView = drawerNavView.getHeaderView(0)
+        val imageViewProfile = headerView.findViewById<CircleImageView>(R.id.imageViewProfile)
+        val textViewName = headerView.findViewById<TextView>(R.id.textViewName)
+
+        val profileViewModel = ProfileViewModel(ProfileRepository(ApiConfig.getApiService(this)))
+
+        profileViewModel.profileLiveData.observe(this) { profile ->
+            textViewName.text = profile.username
+
+            val imageUrl = profile.image?.toString()
+            if (!imageUrl.isNullOrBlank()) {
+                Glide.with(this)
+                    .load(imageUrl)
+                    .into(imageViewProfile)
+            } else {
+                imageViewProfile.setImageResource(R.drawable.ic_profile)
+            }
+        }
+        profileViewModel.loadProfile()
     }
 }

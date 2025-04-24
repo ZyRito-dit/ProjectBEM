@@ -1,9 +1,11 @@
 package com.example.projectbem.Drawer.SettingMenu
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.projectbem.Login.MainActivity
 import com.example.projectbem.databinding.ActivitySettingBinding
 
 class SettingActivity : AppCompatActivity() {
@@ -15,32 +17,50 @@ class SettingActivity : AppCompatActivity() {
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Setup Toolbar
         setSupportActionBar(binding.toolbarSetting)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Pengaturan"
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = "Pengaturan"
+        }
         binding.toolbarSetting.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
+        // Ambil shared preferences
         preferences = getSharedPreferences("app_settings", MODE_PRIVATE)
 
-        val darkModeEnabled = preferences.getBoolean("dark_mode", false)
-        val notifEnabled = preferences.getBoolean("notification", false)
+        // Set switch sesuai nilai yang tersimpan
+        binding.switchDarkMode.isChecked = preferences.getBoolean("dark_mode", false)
+        binding.switchNotification.isChecked = preferences.getBoolean("notification", false)
 
-        binding.switchDarkMode.isChecked = darkModeEnabled
-        binding.switchNotification.isChecked = notifEnabled
-
+        // Dark Mode
         binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
             preferences.edit().putBoolean("dark_mode", isChecked).apply()
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+            AppCompatDelegate.setDefaultNightMode(
+                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
 
+        // Notifikasi
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             preferences.edit().putBoolean("notification", isChecked).apply()
         }
+
+        // Logout Button
+        binding.buttonLogout.setOnClickListener {
+            logoutUser()
+        }
+    }
+
+    private fun logoutUser() {
+        val userPref = getSharedPreferences("user_session", MODE_PRIVATE)
+        userPref.edit().clear().apply()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
